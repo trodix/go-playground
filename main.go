@@ -11,6 +11,7 @@ import (
 	"github.com/trodix/go-rest-api/config"
 	"github.com/trodix/go-rest-api/database"
 	"github.com/trodix/go-rest-api/repository"
+	"github.com/trodix/go-rest-api/service"
 )
 
 func main() {
@@ -23,9 +24,10 @@ func main() {
 
 	// Initialize repositories
 	userRepo := repository.NewUserRepository(dbPool)
+	userService := service.NewUserService(userRepo)
 
 	// Create handlers
-	userHandler := handlers.NewUserHandler(userRepo)
+	userHandler := handlers.NewUserHandler(userService)
 
 	// Setup routes
 	r := mux.NewRouter()
@@ -33,9 +35,9 @@ func main() {
 
 	r.HandleFunc("/api/v1/users", userHandler.CreateUser).Methods("POST")
 	r.HandleFunc("/api/v1/users", userHandler.GetUsers).Methods("GET")
-	r.HandleFunc("/api/v1/users/{id}", userHandler.GetUser).Methods("GET")
-	r.HandleFunc("/api/v1/users/{id}", userHandler.UpdateUser).Methods("PUT")
-	r.HandleFunc("/api/v1/users/{id}", userHandler.DeleteUser).Methods("DELETE")
+	r.HandleFunc("/api/v1/users/{id:[0-9]+}", userHandler.GetUser).Methods("GET")
+	r.HandleFunc("/api/v1/users/{id:[0-9]+}", userHandler.UpdateUser).Methods("PUT")
+	r.HandleFunc("/api/v1/users/{id:[0-9]+}", userHandler.DeleteUser).Methods("DELETE")
 
 	// Start the server
 	log.Printf("Server is running on port %d", cfg.Server.Port)
