@@ -23,10 +23,17 @@ type DBConfig struct {
 	Name     string
 }
 
+type OidcConfig struct {
+	IssuerUrl   	string
+	ClientId		string
+	ClientSecret	string
+}
+
 // Config stores all application configuration
 type Config struct {
 	Server ServerConfig
 	Database DBConfig
+	OIDC OidcConfig
 }
 
 // LoadConfig loads the configuration from config.yaml and environment variables

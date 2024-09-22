@@ -10,7 +10,7 @@ require (
 require (
 	cloud.google.com/go v0.112.1 // indirect
 	cloud.google.com/go/compute v1.25.1 // indirect
-	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	cloud.google.com/go/compute/metadata v0.3.0 // indirect
 	cloud.google.com/go/iam v1.1.6 // indirect
 	cloud.google.com/go/longrunning v0.5.5 // indirect
 	cloud.google.com/go/spanner v1.56.0 // indirect
@@ -45,6 +45,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/internal/s3shared v1.13.17 // indirect
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.27.11 // indirect
 	github.com/aws/smithy-go v1.13.3 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
@@ -66,6 +67,8 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/form3tech-oss/jwt-go v3.2.5+incompatible // indirect
 	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
+	github.com/go-chi/chi/v5 v5.1.0 // indirect
+	github.com/go-jose/go-jose/v4 v4.0.4 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -91,6 +94,8 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.3 // indirect
+	github.com/gorilla/schema v1.3.0 // indirect
+	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/gsterjov/go-libsecret v0.0.0-20161001094733-a6f4afe4910c // indirect
 	github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -130,6 +135,8 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
+	github.com/muhlemmer/gu v0.3.1 // indirect
+	github.com/muhlemmer/httpforwarded v0.1.0 // indirect
 	github.com/mutecomm/go-sqlcipher/v4 v4.4.0 // indirect
 	github.com/nakagami/firebirdsql v0.0.0-20190310045651-3c02a58cfed8 // indirect
 	github.com/neo4j/neo4j-go-driver v1.8.1-0.20200803113522-b626aa943eba // indirect
@@ -141,6 +148,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/rqlite/gorqlite v0.0.0-20230708021416-2acd02b70b79 // indirect
+	github.com/rs/cors v1.11.1 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/snowflakedb/gosnowflake v1.6.19 // indirect
@@ -152,6 +160,8 @@ require (
 	github.com/xdg-go/stringprep v1.0.3 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
 	github.com/zeebo/xxh3 v1.0.2 // indirect
+	github.com/zitadel/logging v0.6.0 // indirect
+	github.com/zitadel/schema v1.3.0 // indirect
 	gitlab.com/nyarla/go-crypt v0.0.0-20160106005555-d9a5dc2b789b // indirect
 	go.mongodb.org/mongo-driver v1.7.5 // indirect
 	go.opencensus.io v0.24.0 // indirect
@@ -163,7 +173,7 @@ require (
 	golang.org/x/crypto v0.27.0 // indirect
 	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/net v0.29.0 // indirect
-	golang.org/x/oauth2 v0.18.0 // indirect
+	golang.org/x/oauth2 v0.23.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
 	golang.org/x/term v0.24.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
@@ -176,7 +186,9 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240513163218-0867130af1f8 // indirect
 	google.golang.org/grpc v1.64.1 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
+	gopkg.in/go-jose/go-jose.v2 v2.6.3 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
+	gopkg.in/square/go-jose.v2 v2.6.0 // indirect
 	lukechampine.com/uint128 v1.2.0 // indirect
 	modernc.org/b v1.0.0 // indirect
 	modernc.org/cc/v3 v3.36.3 // indirect
@@ -215,6 +227,9 @@ require (
 	github.com/spf13/cast v1.6.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
+	github.com/zitadel/oidc v1.13.5
+	github.com/zitadel/oidc/v2 v2.12.2
+	github.com/zitadel/oidc/v3 v3.30.0
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect

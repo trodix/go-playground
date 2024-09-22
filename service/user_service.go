@@ -29,6 +29,11 @@ func (s *UserService) GetUserByID(ctx context.Context, id int) (*models.User, er
 	return s.Repo.GetUserByID(ctx, id)
 }
 
+// GetUserByID retrieves a user by their Username
+func (s *UserService) GetUserByUsername(ctx context.Context, username string) (*models.User, error) {
+	return s.Repo.GetUserByUsername(ctx, username)
+}
+
 // GetAllUsers retrieves all users
 func (s *UserService) GetAllUsers(ctx context.Context) ([]*models.User, error) {
 	return s.Repo.GetAllUsers(ctx)

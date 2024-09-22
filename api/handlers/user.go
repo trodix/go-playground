@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -10,6 +11,7 @@ import (
 	"github.com/trodix/go-rest-api/models"
 	"github.com/trodix/go-rest-api/service"
 	"github.com/trodix/go-rest-api/utils"
+	"github.com/zitadel/oidc/v3/pkg/oidc"
 )
 
 type UserHandler struct {
@@ -56,6 +58,19 @@ func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 	user, err := h.Service.GetUserByID(r.Context(), id)
 	if err != nil {
 		w.(*middleware.ResponseRecorder).CaptureError(http.StatusNotFound, "User not found")
+		return
+	}
+
+	json.NewEncoder(w).Encode(user)
+}
+
+// GetUser retrieves a user by Username from accessToken
+func (h *UserHandler) GetMe(w http.ResponseWriter, r *http.Request) {
+
+	accessToken := r.Context().Value(middleware.AuthenticationKey).(*oidc.IntrospectionResponse)
+	user, err := h.Service.GetUserByUsername(r.Context(), accessToken.PreferredUsername)
+	if err != nil {
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusNotFound, fmt.Sprintf("Sorry %s, you don't have an account", accessToken.PreferredUsername))
 		return
 	}
 

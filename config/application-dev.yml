@@ -6,3 +6,8 @@ database:
   port: 5432
   user: "postgres"
   password: "postgres"
+
+oidc:
+  issuerUrl: "http://trodix.local:7080/realms/go-rest"
+  clientId: "go-rest-api"
+  clientSecret: "daoTNKS1L9xQ6o0iPMokljbu86ngkj6L"

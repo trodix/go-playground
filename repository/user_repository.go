@@ -34,6 +34,17 @@ func (r *UserRepository) GetUserByID(ctx context.Context, id int) (*models.User,
 	return user, nil
 }
 
+// GetUserByID retrieves a user by Username from the database
+func (r *UserRepository) GetUserByUsername(ctx context.Context, username string) (*models.User, error) {
+	query := "SELECT id, username, email FROM users WHERE username = $1"
+	user := &models.User{}
+	err := r.db.QueryRow(ctx, query, username).Scan(&user.ID, &user.Username, &user.Email)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 // GetAllUsers retrieves all users from the database
 func (r *UserRepository) GetAllUsers(ctx context.Context) ([]*models.User, error) {
 	query := "SELECT id, username, email FROM users"
