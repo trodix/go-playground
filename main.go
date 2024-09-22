@@ -32,6 +32,7 @@ func main() {
 	// Setup routes
 	r := mux.NewRouter()
 	r.Use(middleware.JSONMiddleware)
+	r.Use(middleware.ErrorHandlingMiddleware)
 
 	r.HandleFunc("/api/v1/users", userHandler.CreateUser).Methods("POST")
 	r.HandleFunc("/api/v1/users", userHandler.GetUsers).Methods("GET")

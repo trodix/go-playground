@@ -2,11 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/trodix/go-rest-api/api/middleware"
 	"github.com/trodix/go-rest-api/models"
 	"github.com/trodix/go-rest-api/service"
 	"github.com/trodix/go-rest-api/utils"
@@ -24,20 +24,19 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	// Validate user
 	if err := utils.ValidateStruct(user); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Validation failed: "+err.Error())
 		return
 	}
 
-	// Call the service to handle business logic and interact with the repo
 	err := h.Service.CreateUser(r.Context(), &user)
 	if err != nil {
-		http.Error(w, "Failed to create user: "+err.Error(), http.StatusInternalServerError)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Failed to create user: "+err.Error())
 		return
 	}
 
@@ -50,13 +49,13 @@ func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid user ID", http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Invalid user ID")
 		return
 	}
 
 	user, err := h.Service.GetUserByID(r.Context(), id)
 	if err != nil {
-		http.Error(w, "User not found", http.StatusNotFound)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusNotFound, "User not found")
 		return
 	}
 
@@ -67,8 +66,7 @@ func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 	users, err := h.Service.GetAllUsers(r.Context())
 	if err != nil {
-		log.Printf("Failed to retrieve users: %s", err.Error())
-		http.Error(w, "Failed to retrieve users", http.StatusInternalServerError)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusInternalServerError, "Failed to retrieve users")
 		return
 	}
 	if users == nil {
@@ -82,25 +80,25 @@ func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid user ID", http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Invalid user ID")
 		return
 	}
 
 	var user models.User
 	if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
-		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 
 	// Validate user
 	if err := utils.ValidateStruct(user); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, err.Error())
 		return
 	}
 
 	user.ID = id
 	if err := h.Service.UpdateUser(r.Context(), &user); err != nil {
-		http.Error(w, "Failed to update user", http.StatusInternalServerError)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusInternalServerError, "Failed to update user")
 		return
 	}
 
@@ -112,12 +110,12 @@ func (h *UserHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		http.Error(w, "Invalid user ID", http.StatusBadRequest)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusBadRequest, "Invalid user ID")
 		return
 	}
 
 	if err := h.Service.DeleteUser(r.Context(), id); err != nil {
-		http.Error(w, "Failed to delete user", http.StatusInternalServerError)
+		w.(*middleware.ResponseRecorder).CaptureError(http.StatusInternalServerError, "Failed to delete user")
 		return
 	}
 
