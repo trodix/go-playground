@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -29,7 +30,7 @@ func main() {
 	// Setup routes
 	r := mux.NewRouter()
 	r.Use(middleware.JSONMiddleware)
-	
+
 	r.HandleFunc("/api/v1/users", userHandler.CreateUser).Methods("POST")
 	r.HandleFunc("/api/v1/users", userHandler.GetUsers).Methods("GET")
 	r.HandleFunc("/api/v1/users/{id}", userHandler.GetUser).Methods("GET")
@@ -37,6 +38,6 @@ func main() {
 	r.HandleFunc("/api/v1/users/{id}", userHandler.DeleteUser).Methods("DELETE")
 
 	// Start the server
-	log.Println("Server is running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Printf("Server is running on port %d", cfg.Server.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", cfg.Server.Port), r))
 }

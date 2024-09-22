@@ -25,7 +25,7 @@ func ConnectPostgres(cfg config.DBConfig) (*pgxpool.Pool, *sql.DB) {
 		log.Fatalf("Unable to connect to database: %s", err)
 	}
 
-	fmt.Println("Connected to PostgreSQL")
+	log.Printf("Connected to PostgreSQL at %s:%d/%s", cfg.Host, cfg.Port, cfg.Name)
 
 	db, err := sql.Open("pgx", dsn)
     if err != nil {

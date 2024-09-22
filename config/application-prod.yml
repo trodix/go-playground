@@ -1,0 +1,8 @@
+server:
+  port: 8080
+
+database:
+  host: "prod"
+  port: 5433
+  user: "prod"
+  password: "prod"
