@@ -22,7 +22,6 @@ func NewUserHandler(repo *repository.UserRepository) *UserHandler {
 
 // CreateUser creates a new user
 func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
     var user models.User
     if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
         http.Error(w, "Invalid request payload", http.StatusBadRequest)
@@ -47,7 +46,6 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 // GetUser retrieves a user by ID
 func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
     vars := mux.Vars(r)
     id, err := strconv.Atoi(vars["id"])
     if err != nil {
@@ -66,7 +64,6 @@ func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 
 // GetUsers retrieves all users
 func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
     users, err := h.Repo.GetAllUsers(r.Context())
     if err != nil {
 		log.Printf("Failed to retrieve users: %s", err.Error())
@@ -81,7 +78,6 @@ func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 
 // UpdateUser updates an existing user
 func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
     vars := mux.Vars(r)
     id, err := strconv.Atoi(vars["id"])
     if err != nil {
