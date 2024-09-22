@@ -8,7 +8,7 @@ import (
 
 // ErrorResponse represents the structure of the error response
 type ErrorResponse struct {
-	Status    int       `json:"code"`
+	Status    string       `json:"status"`
 	Message   string    `json:"message"`
 	Timestamp time.Time `json:"timestamp"`
 }
@@ -17,7 +17,7 @@ type ErrorResponse struct {
 func ErrorHandlingMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Create a response recorder to capture the status code
-		rec := &ResponseRecorder{ResponseWriter: w, statusCode: http.StatusOK}
+		rec := &ResponseRecorder{ResponseWriter: w, status: http.StatusText(http.StatusOK)}
 		
 		// Call the next handler
 		next.ServeHTTP(rec, r)		
@@ -27,19 +27,19 @@ func ErrorHandlingMiddleware(next http.Handler) http.Handler {
 // responseRecorder is a custom ResponseWriter to capture the status code and error message
 type ResponseRecorder struct {
 	http.ResponseWriter
-	statusCode   int
+	status   string
 	errorMessage string
 }
 
 // CaptureError sets the error message for the response
 func (rr *ResponseRecorder) CaptureError(code int, msg string) {
-	rr.statusCode = code
+	rr.status = http.StatusText(code)
 	rr.errorMessage = msg
 	rr.ResponseWriter.WriteHeader(code)
 
 	// If the status code indicates an error, send a structured JSON response
 	errorResponse := ErrorResponse{
-		Status:    rr.statusCode,
+		Status:    http.StatusText(code),
 		Message:   rr.errorMessage,
 		Timestamp: time.Now(),
 	}
